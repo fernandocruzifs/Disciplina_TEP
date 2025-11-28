@@ -1,0 +1,92 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <title>Sistema Post</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">Sistema</a>
+      
+
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+           {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'listagemPosts' %}">Post</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/questoes">Categoria</a>
+            </li>
+          {% endif %}
+          </ul>
+          <ul class="navbar-nav">
+            {% if request.user.is_authenticated %}
+            
+            
+               <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    
+                    <li class="nav-item" style="float: right !important;">
+                        <button class="nav-link btnsair" type="submit" 
+                        style="color: #007bff !important;text-decoration: none !important;border: 0px !important;">
+                        <i class="fa fa-sign-out"></i>Sair</button></li>
+                </form>
+            {% else %}
+              <li class="nav-item" ><a class="nav-link" href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Entrar</a></li>
+              
+            {% endif %}
+            </ul>
+      </div>
+    </div>
+
+  </nav>
+
+  <div class="container">
+    {% include 'includes/messages.html' %}
+    {% block content %}{% endblock %}
+  </div>
+
+  <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script>
+    function confirmDelete(url) {
+      const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+      const form = document.getElementById('confirmDeleteForm');
+      form.action = url;
+      modal.show();
+    }
+  </script>
+
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <form method="post" id="confirmDeleteForm" class="modal-content">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmar exclusão</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          Tem certeza de que deseja excluir?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Excluir</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+</body>
+
+</html>

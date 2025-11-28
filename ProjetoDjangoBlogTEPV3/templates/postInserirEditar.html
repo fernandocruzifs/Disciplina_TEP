@@ -1,0 +1,16 @@
+{% extends "base2.html" %}
+{% block content %}
+
+<div class="card">
+  <div class="card-header">{% if form.instance.id %}Editar Post: {{ form.instance.titulo }}{% else %}Nova Post{% endif %}</div>
+  <div class="card-body">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a href="{% url 'listagemPosts' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+  </div>
+</div>
+{% endblock content %}

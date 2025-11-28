@@ -1,0 +1,15 @@
+{% extends "base2.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h5>Posts</h5>
+  {% if perms.blog.add_post %}
+    <a class="btn btn-success" href="{% url 'novo_post' %}">Novo Post</a>
+  {% endif %}
+</div>
+{% for post in post_list %}
+<div class="post-entry">
+    <h2><a href="{% url 'detalhapost' post.pk %}">{{post.titulo}}</a></h2>
+    <p>{{ post.texto }}</p>
+</div>
+{% endfor %}
+{% endblock content %}

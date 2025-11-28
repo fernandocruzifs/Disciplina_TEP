@@ -1,0 +1,37 @@
+{% load static %}
+<html>
+<head>
+    <title>Django Blob</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'home'%}">Django Blog</a></h1>
+        <div class="nav-right">
+            <a href="{% url 'novo_post' %}">+Novo Post</a>
+        </div>
+    </header>
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+    {% if user.is_authenticated %}
+        <p>OI {{ user.username }}!</p>
+        <p>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Sair</button>
+            </form>
+        </p>
+    {% else %}
+        <p>Usuário não logado.</p>
+        <a href="{% url 'login' %}">Entrar</a>
+    {% endif %}
+    <div>
+        {%block content %}
+
+        {%endblock content %}
+    </div>
+</body>
+</html>
