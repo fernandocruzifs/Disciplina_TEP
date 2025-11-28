@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="post-entry">
+        <h2>{{post.titulo}}</h2>
+        <p>{{ post.texto }}</p>
+
+    </div>
+    <a href="{% url 'edicao_post' post.pk %}">Editar Post</a>
+    <a href="{% url 'exclusao_post' post.pk %}">Excluir Post</a>
+{% endblock content %}
