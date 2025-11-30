@@ -5,7 +5,7 @@ from blog.forms import PostForm
 from blog.models import Post
 from django.contrib import messages
 from django import template
-
+"""
 # Create your views here.
 class BlogListView(ListView):
     model = Post
@@ -29,7 +29,7 @@ class BlogDeleteView(DeleteView):
     model = Post
     template_name = 'exclusao_post.html'
     success_url = reverse_lazy("home")
-
+"""
 register = template.Library()
 @register.filter('in_group')
 def in_group(user, group_name):
@@ -39,22 +39,10 @@ def HomeIndexView(request):
     context = {
         'post_list': Post.objects.all(),
     }
-    return render(request,template_name='home2.html',context=context,status=200)
+    return render(request,template_name='home.html',context=context,status=200)
 
 def ListagemPostView(request):
-    usuario = request.user
-    
-    # Permissões diretas do usuário
-    permissoes_diretas = usuario.user_permissions.all()
-    print(permissoes_diretas)
-    # Permissões através dos grupos
-    grupos_usuario = usuario.groups.all()
-    print(grupos_usuario)
-    permissoes_dos_grupos = set()
-    for grupo in grupos_usuario:
-        print(grupo)
-        permissoes_dos_grupos.update(grupo.permissions.all())
-    print(request.user.has_perm('Blog | post | Can add post'))
+ 
     context = {
         'post_list': Post.objects.all(),
     }
@@ -64,7 +52,7 @@ def DetalharPostView(request,pk=None):
     context = {
         'post': Post.objects.filter(id=pk).first(),
     }
-    return render(request,template_name='detalhapost2.html',context=context,status=200)
+    return render(request,template_name='detalhapost.html',context=context,status=200)
 
 def InserirPostView(request):
     if request.method == 'POST':

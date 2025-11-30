@@ -1,9 +1,4 @@
 {% extends "base.html" %}
 {% block content %}
-{% for post in post_list %}
-<div class="post-entry">
-    <h2><a href="{% url 'detalhapost' post.pk %}">{{post.titulo}}</a></h2>
-    <p>{{ post.texto }}</p>
-</div>
-{% endfor %}
+
 {% endblock content %}
